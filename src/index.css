@@ -1,0 +1,51 @@
+.header { 
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.nav-items > ul {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+}
+
+#body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+}
+#search-container {
+    height: 50px;
+    width: 400px;
+    border-radius: 12px;
+    background-color: rgb(240, 240, 245);
+}
+#card-container {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.image-container > img {
+    width: 200px;
+}
+.restrau-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+.card-row2 {
+    display: flex;
+    gap: 12px;
+}
+.restrau-cuisine {
+    color: rgba(2, 6, 12, 0.6);
+}

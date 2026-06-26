@@ -1,0 +1,28 @@
+{
+  "name": "react-practice",
+  "version": "1.0.0",
+  "description": "This is practice set for Namaste React",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --dist-dir build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arugupta1992/namaste-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arugupta1992/namaste-react/issues"
+  },
+  "homepage": "https://github.com/arugupta1992/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.18.0"
+  }
+}
