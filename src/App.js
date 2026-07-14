@@ -29,36 +29,67 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import HeaderComponent from './components/Header';
 import BodyComponent from './components/Body';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router';
 import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
+import RestrauMenu from './components/RestrauMenu';
 
 
 const AppLayout = () => {
 	return (
 		<div className="appcontainer">
 			{<HeaderComponent />}
-			{<BodyComponent />}
+			{<Outlet />}
 		</div>
 	);
 }
 
+//BrowserROuter with nested child routes. With this the header remains constant and only the body changes when we navigate to different routes.
 const appRouter = createBrowserRouter([
 		{
 			path: "/",
 			element: <AppLayout />,
+			children: [
+				{
+					path: '/',
+					element: <BodyComponent />
+				},
+				{
+					path: "/about",
+					element: <About />,
+				},
+				{
+					path: "/contact",
+					element: <Contact />,
+				},
+				{
+					path: "/restrauMenu/:resId",
+					element: <RestrauMenu />,
+				}
+			],
 			errorElement: <Error />,
 		},
-		{
-			path: "/about",
-			element: <About />,
-		},
-		{
-			path: "/contact",
-			element: <Contact />,
-		}
+		
 	]);
+
+//To create a router object that refreshes the page when we navigatet to the defined path
+
+// const appRouter = createBrowserRouter([
+// 		{
+// 			path: "/",
+// 			element: <AppLayout />,
+// 			errorElement: <Error />,
+// 		},
+// 		{
+// 			path: "/about",
+// 			element: <About />,
+// 		},
+// 		{
+// 			path: "/contact",
+// 			element: <Contact />,
+// 		}
+// 	]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<RouterProvider router={appRouter} />);

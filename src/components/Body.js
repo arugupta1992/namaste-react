@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import resList from '../utils/mockData';
 import { useState , useEffect } from 'react';
+import { Link } from 'react-router';
 
 const BodyComponent = () => {
     const [restrauList, setRestrauList] = useState([]);
@@ -16,10 +17,14 @@ const BodyComponent = () => {
     // } OR
 
     const fetchData = async () => {
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5748092&lng=77.35658099999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-        const json = await data.json();
-        setRestrauList(json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredRestrauList(json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        // const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.5748092&lng=77.35658099999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const url = "https://namastedev.com/api/v1/listRestaurants";
+        const response = await fetch(url);
+        const json = await response.json();
+        setRestrauList(json.data.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredRestrauList(json.data.data.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        // setRestrauList(json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        // setFilteredRestrauList(json.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
 
 	return (
@@ -47,7 +52,7 @@ const BodyComponent = () => {
                     onClick={() => {
                         console.log(restrauList);
                         const filtered = restrauList.filter((restrau) => restrau.info.avgRating > 4.4);
-                        setRestrauList(filtered);
+                        setFilteredRestrauList(filtered);
                     }}
                 >
                     Top Rated Restaurants
@@ -55,10 +60,12 @@ const BodyComponent = () => {
             </div>
 			<div id="card-container">
                 {filteredRestrauList.map((restrau) => (
-                    <RestaurantCard 
-                        key={restrau.info.id}
-                        resData={restrau.info}
-                    />
+                    <Link to={'/restrauMenu/' + restrau.info.id} key={restrau.info.id}>
+                        <RestaurantCard 
+                            key={restrau.info.id}
+                            resData={restrau.info}
+                        />
+                    </Link>
                 ))
         }   
 			</div>
