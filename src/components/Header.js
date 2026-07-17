@@ -1,12 +1,17 @@
 import { Link } from "react-router";
+import useGetOnlineStatus from "../utils/useGetOnlineStatus";
 
 const HeaderComponent = () => {
+    const isOnline = useGetOnlineStatus();
 
 	return (
 		<div className="header">
 			<img src="../assets/logo.jpg" alt="logo" className="logo" />
 			<div className="nav-items">
 				<ul>
+					<li>
+						<span>Online Status: {isOnline ? "🟢" : "🔴"}</span>
+					</li>
 					<li>
 						<Link to="/">Home</Link>
 					</li>

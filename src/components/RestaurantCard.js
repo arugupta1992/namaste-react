@@ -30,4 +30,15 @@ const RestaurantCard =(props) => {
 	)
 }
 
+export const withOfferRestaurantCard = (RestaurantCard) => {
+	return (props) => {
+		const discount = props.resData.aggregatedDiscountInfoV3?.header + " " + props.resData.aggregatedDiscountInfoV3?.subHeader;
+		return (
+			<div className="container">
+				<label>{discount}</label>
+				<RestaurantCard {...props} />
+			</div>
+		)
+	}
+}
 export default RestaurantCard;
