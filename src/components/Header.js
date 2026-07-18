@@ -2,13 +2,14 @@ import { Link } from "react-router";
 import useGetOnlineStatus from "../utils/useGetOnlineStatus";
 import { useContext } from "react";
 import UserContext from "../utils/userContext";
-
-
+import { useSelector } from "react-redux";
 
 const HeaderComponent = () => {
     const isOnline = useGetOnlineStatus();
 	const {loggedInUser} = useContext(UserContext);
-	
+
+	const cartItems = useSelector((store) => store.cart?.items ?? []);
+
 	return (
 		<div className="header">
 			<img src="../assets/logo.jpg" alt="logo" className="logo" />
@@ -27,7 +28,7 @@ const HeaderComponent = () => {
 						<Link to="/contact">Contact</Link>
 					</li>
 					<li>
-						<Link to="/cart">Cart</Link>
+						<Link to="/cart">Cart ({cartItems.length})</Link>
 					</li>
 					<li>
 						<span>{loggedInUser}</span>

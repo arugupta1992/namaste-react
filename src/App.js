@@ -36,6 +36,8 @@ import Error from './components/Error';
 import RestrauMenu from './components/RestrauMenu';
 import { useState, useEffect } from 'react';
 import UserContext from './utils/userContext';
+import { Provider } from 'react-redux';
+import appStore from './store/appStore';
 
 // Below is the code to change the value of the userContext and pass it down to the child components. 
 // We will wrap the AppLayout component with the UserContext.Provider and pass the value prop to it.
@@ -53,14 +55,16 @@ const AppLayout = () => {
 	},[])
 
 	return (
-		<UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
-			<div className="appcontainer">
-				<UserContext.Provider value={{loggedInUser: loggedInUser}}>      { /* This means only the user context used in Header component will have value Elon Musk and rest of the places in the app will */}
-					{<HeaderComponent />}										{/* have the value "Arushi Gupta" as set in the parent UserContext.Provider. This is because the child component will always use the nearest context provider value. */}
-				</UserContext.Provider>
-				{<Outlet />}
-			</div>
-		</UserContext.Provider>
+		<Provider store={appStore}>
+			<UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+				<div className="appcontainer">
+					<UserContext.Provider value={{loggedInUser: loggedInUser}}>      { /* This means only the user context used in Header component will have value Elon Musk and rest of the places in the app will */}
+						{<HeaderComponent />}										{/* have the value "Arushi Gupta" as set in the parent UserContext.Provider. This is because the child component will always use the nearest context provider value. */}
+					</UserContext.Provider>
+					{<Outlet />}
+				</div>
+			</UserContext.Provider>
+		</Provider>
 	);
 }
 
