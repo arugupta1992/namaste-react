@@ -1,9 +1,14 @@
 import { Link } from "react-router";
 import useGetOnlineStatus from "../utils/useGetOnlineStatus";
+import { useContext } from "react";
+import UserContext from "../utils/userContext";
+
+
 
 const HeaderComponent = () => {
     const isOnline = useGetOnlineStatus();
-
+	const {loggedInUser} = useContext(UserContext);
+	
 	return (
 		<div className="header">
 			<img src="../assets/logo.jpg" alt="logo" className="logo" />
@@ -23,6 +28,9 @@ const HeaderComponent = () => {
 					</li>
 					<li>
 						<Link to="/cart">Cart</Link>
+					</li>
+					<li>
+						<span>{loggedInUser}</span>
 					</li>
 				</ul>
 			</div>

@@ -34,14 +34,33 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Error from './components/Error';
 import RestrauMenu from './components/RestrauMenu';
+import { useState, useEffect } from 'react';
+import UserContext from './utils/userContext';
+
+// Below is the code to change the value of the userContext and pass it down to the child components. 
+// We will wrap the AppLayout component with the UserContext.Provider and pass the value prop to it.
+// This way, all the child components of AppLayout will have access to the loggedInUser value from the context.
 
 
 const AppLayout = () => {
+	const [loggedInUser, setLoggedInUser] = useState("Dummy User");
+
+	//Suppose  ihave an auth api that fetches the logged in user name
+	useEffect(() => {
+			//I am currently returning hard coded value since I don't have the api
+			const userName = { name: "Arushi Gupta" };
+			setLoggedInUser(userName.name);
+	},[])
+
 	return (
-		<div className="appcontainer">
-			{<HeaderComponent />}
-			{<Outlet />}
-		</div>
+		<UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+			<div className="appcontainer">
+				<UserContext.Provider value={{loggedInUser: loggedInUser}}>      { /* This means only the user context used in Header component will have value Elon Musk and rest of the places in the app will */}
+					{<HeaderComponent />}										{/* have the value "Arushi Gupta" as set in the parent UserContext.Provider. This is because the child component will always use the nearest context provider value. */}
+				</UserContext.Provider>
+				{<Outlet />}
+			</div>
+		</UserContext.Provider>
 	);
 }
 

@@ -6,6 +6,7 @@ import RestrauCategory from './RestrauCategory';
 
 const RestrauMenu = () => {
     const { resId }  = useParams();
+    const [ showMenuCategoryIndex, setShowMenuCategoryIndex ] = useState(0);   // To track which category is currently expanded to show the menu items via index. By default, the first category is expanded.
     //Moved below code to useGetRestrauMenu.js custom hook to make the code cleaner and reusable.
     // const [menuPageData, setMenuPageData] = useState(null);
 
@@ -31,11 +32,13 @@ const RestrauMenu = () => {
 
     const menuPageData = useGetRestrauMenu(resId);
 
+    const handleMenuCategoryClick = (index) => {
+        index === showMenuCategoryIndex ? setShowMenuCategoryIndex(-1) : setShowMenuCategoryIndex(index);
+    }
+
     let { name, cuisines, costForTwoMessage, avgRating } = menuPageData ? menuPageData[2].card.card.info : { name: "", cuisines: [], costForTwoMessage: "", menu: [] };
     let itemCards = menuPageData ? menuPageData[4].groupedCard.cardGroupMap.REGULAR.cards : [];
-    console.log(itemCards);
     let categories = itemCards.filter(card => card?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory") || [];
-    console.log(categories);
     // return (
     //     <div>
     //         <h2>{name}</h2>
@@ -85,9 +88,11 @@ const RestrauMenu = () => {
             <p>{cuisines.join(", ")}</p>
             <p>{costForTwoMessage}</p>
             <div>
-                {categories.map((category)=> <RestrauCategory 
+                {categories.map((category, index)=> <RestrauCategory 
                     key={category.card.card.title}
                     category={category}
+                    showMenuItems={index === showMenuCategoryIndex}
+                    setShowMenuCategoryIndex={() => handleMenuCategoryClick(index)}
                     />
                 )}
             </div>

@@ -5,7 +5,7 @@ const MenuItemList = ({itemCards}) => {
             <div>
                 {itemCards.map((item) => {
                     return (
-                        <div>
+                        <div key={item.card.info.id}>
                             <div key={item.card.info.id}>
                                 <div>{item.card.info.name}</div>
                                 <div>{item.card.info.price / 100}</div>

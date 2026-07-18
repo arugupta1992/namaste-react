@@ -1,9 +1,10 @@
 import RestaurantCard, { withOfferRestaurantCard } from "./RestaurantCard";
 import resList from '../utils/mockData';
-import { useState , useEffect } from 'react';
+import { useState , useEffect, useContext } from 'react';
 import { Link } from 'react-router';
 import useGetOnlineStatus from "../utils/useGetOnlineStatus";
 import { RESTRAU_LIST_URL } from "../utils/constants";
+import UserContext from "../utils/userContext";
 
 const BodyComponent = () => {
     const [restrauList, setRestrauList] = useState([]);
@@ -35,6 +36,7 @@ const BodyComponent = () => {
 
     const isOnline = useGetOnlineStatus();
     if(!isOnline) return <h1>🔴 Offline, Please check your internet connection!!</h1>
+    const { setLoggedInUser } = useContext(UserContext);
 
 	return (
 		<div id="body">
@@ -66,6 +68,11 @@ const BodyComponent = () => {
                 >
                     Top Rated Restaurants
                 </button>
+                <input onChange={(e) => {
+                    setLoggedInUser(e.target.value);
+                }}>
+                    
+                </input>
             </div>
 			<div id="card-container">
                 {filteredRestrauList.map((restrau) => {
